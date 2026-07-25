@@ -1,13 +1,15 @@
 from fastapi import FastAPI
 
+from app.core.settings import settings
+
 from app.api.v1.root import router as root_router
 from app.api.v1.health import router as health_router
 from app.api.v1.version import router as version_router
 
 app = FastAPI(
-    title="ZeroTouch",
-    description="ZeroTouch GitOps Deployment Platform",
-    version="0.1.0",
+    title=settings.APP_NAME,
+    description="Production-ready GitOps Deployment Platform",
+    version=settings.APP_VERSION,
 )
 
 app.include_router(root_router, prefix="/api/v1", tags=["Root"])
