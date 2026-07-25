@@ -1,12 +1,16 @@
-from fastapi import APIRouter
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
-from app.core.settings import settings
 
-router = APIRouter()
+class Settings(BaseSettings):
+    APP_NAME: str = "ZeroTouch"
+    APP_VERSION: str = "0.1.0"
+    APP_ENV: str = "development"
+    DEBUG: bool = True
 
-@router.get("/version")
-def version():
-    return{
-        "application": setttings.APP_NAME,
-        "version": settings.APP_VERSION,
-    }
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        case_sensitive=True,
+    )
+
+
+settings = Settings()
