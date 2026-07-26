@@ -9,3 +9,4 @@ def root():
         "message": "Welcome to ZeroTouch API",
         "status": "running"
     }
+    

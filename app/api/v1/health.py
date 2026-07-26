@@ -4,6 +4,8 @@ from app.schemas.health import (
     LiveResponse,
     ReadyResponse,
 )
+from app.core.settings import settings
+
 router = APIRouter()
 
 @router.get("/health", response_model=HealthResponse)
