@@ -1,10 +1,11 @@
 from fastapi import APIRouter
+
+from app.core.settings import settings
 from app.schemas.health import (
     HealthResponse,
     LiveResponse,
     ReadyResponse,
 )
-from app.core.settings import settings
 
 router = APIRouter()
 

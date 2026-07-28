@@ -1,15 +1,15 @@
 from fastapi import FastAPI
 
-from app.core.settings import settings
-
-from app.api.v1.root import router as root_router
 from app.api.v1.health import router as health_router
+from app.api.v1.root import router as root_router
 from app.api.v1.version import router as version_router
 from app.core.logging import setup_logging
+from app.core.settings import settings
 
 setup_logging()
 
 import logging
+
 logger = logging.getLogger(__name__)
 logger.info("Starting %s v%s", settings.APP_NAME, settings.APP_VERSION)
 app = FastAPI(
