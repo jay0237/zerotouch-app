@@ -38,3 +38,13 @@ jobs:
 
       - name: Build Docker image
         run: docker build -t zerotouch:test .
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: "zerotouch:test"
+          format: "table"
+          exit-code: "1"
+          ignore-unfixed: true
+          vuln-type: "os, library"
+          severity: "CRITIcAL, HIGH"
