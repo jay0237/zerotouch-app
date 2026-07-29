@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: zerotouch-app
+  namespace: zerotouch
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: zerotouch
+
+  template:
+    metadata:
+      labels:
+        app: zerotouch
+
+    spec:
+      containers:
+        - name: zerotouch
+          image: zerotouch:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8000
