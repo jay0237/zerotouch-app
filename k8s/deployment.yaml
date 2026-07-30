@@ -22,5 +22,10 @@ spec:
         - name: zerotouch
           image: zerotouch:latest
           imagePullPolicy: Never
+
+          envFrom:
+            - configMapRef:
+                name: zerotouch-config
+
           ports:
             - containerPort: 8000
