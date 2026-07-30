@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: zerotouch-config
+  namespace: zerotouch
+
+
+data:
+  APP_NAME: ZeroTouch
+  APP_ENV: development
+  LOG_LEVEL: INFO
