@@ -27,5 +27,8 @@ spec:
             - configMapRef:
                 name: zerotouch-config
 
+            - secretRef:
+                name: zerotouch-secret
+
           ports:
             - containerPort: 8000
