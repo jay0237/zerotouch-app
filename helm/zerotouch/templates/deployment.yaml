@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: zerotouch-app
+  namespace: zerotouch
+
+spec:
+  replicas: {{ .Values.replicaCount }}
+
+  selector:
+    matchLabels:
+      app: zerotouch
+
+  template:
+    metadata:
+      labels:
+        app: zerotouch
+
+    spec:
+      containers:
+        - name: zerotouch
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+
+          envFrom:
+            - configMapRef:
+                name: zerotouch-config
+            - secretRef:
+                name: zerotouch-secret
+
+          ports:
+            - containerPort: 8000
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+
+            resources:
+            {{ toYaml .Values.resources | nindent 12 }}
+              requests:
+                cpu: "100m"
+                memory: "128Mi"
+
+                limits:
+                  cpu: "500m"
+                  memory: "256Mi"
