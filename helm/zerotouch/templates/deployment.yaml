@@ -6,6 +6,12 @@ metadata:
   namespace: zerotouch
 
 spec:
+  replicas: {{ .Values.replicaCount }}
+
+  selector:
+    matchLabels:
+      app: zerotouch
+
   template:
     metadata:
       labels:
