@@ -1,5 +1,8 @@
+import os
+
 from fastapi import FastAPI, Request
-from prometheus_client import Counter
+from prometheus_client import Counter, REGISTRY
+from prometheus_client.core import CounterMetricFamily
 from prometheus_fastapi_instrumentator import Instrumentator
 
 from app.api.v1.health import router as health_router
@@ -19,6 +22,27 @@ app = FastAPI(
     description="Production-ready GitOps Deployment Platform",
     version=settings.APP_VERSION,
 )
+
+
+def register_process_cpu_collector() -> None:
+    for collector_names in REGISTRY._collector_to_names.values():
+        if "process_cpu_seconds_total" in collector_names:
+            return
+
+    class ProcessCpuCollector:
+        def collect(self):
+            metric = CounterMetricFamily(
+                "process_cpu_seconds_total",
+                "Total user and system CPU time spent in seconds.",
+            )
+            process_cpu_seconds = os.times().user + os.times().system
+            metric.add_metric([], process_cpu_seconds)
+            yield metric
+
+    REGISTRY.register(ProcessCpuCollector())
+
+
+register_process_cpu_collector()
 
 app_exceptions_total = Counter(
     "app_exceptions_total",
