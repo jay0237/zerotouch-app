@@ -9,6 +9,11 @@ service:
   type: ClusterIP
   port: 8000
 
+podAnnotations:
+  prometheus.io/scrape: "true"
+  prometheus.io/path: /metrics
+  prometheus.io/port: "8000"
+
 config:
   APP_NAME: ZeroTouch
   APP_ENV: development
