@@ -38,6 +38,6 @@ autoscaling:
   maxReplicas: 5
   targetCPUUtilizationPercentage: 70
 
-
-
-  
+ingress:
+  enabled: true
+  host: zerotouch.local
