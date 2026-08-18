@@ -4,7 +4,7 @@ from fastapi import FastAPI, Request
 from prometheus_client import Counter, REGISTRY
 from prometheus_client.core import CounterMetricFamily
 from prometheus_fastapi_instrumentator import Instrumentator
-
+from app.api.v1.system import router as system_router
 from app.api.v1.health import router as health_router
 from app.api.v1.root import router as root_router
 from app.api.v1.version import router as version_router
@@ -23,6 +23,7 @@ app = FastAPI(
     version=settings.APP_VERSION,
 )
 
+app.include_router(system_router)
 
 def register_process_cpu_collector() -> None:
     for collector_names in REGISTRY._collector_to_names.values():
