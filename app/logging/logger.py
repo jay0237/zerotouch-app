@@ -29,3 +29,13 @@ class JSONFormatter(logging.Formatter):
             log_entry["duration_ms"] = record.duration_ms
 
         return json.dumps(log_entry)
+
+
+def configure_logging() -> None:
+    handler = logging.StreamHandler(sys.stdout)
+    handler.setFormatter(JSONFormatter())
+
+    root_logger = logging.getLogger()
+    root_logger.handlers.clear()
+    root_logger.addHandler(handler)
+    root_logger.setLevel(logging.INFO)
